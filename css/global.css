@@ -1,0 +1,41 @@
+:root {
+	--cor-0: #222831;
+	--cor-1: #393E46;
+	--cor-2: #00ADB5;
+	--cor-3: #EEEEEE;
+	
+	--font-0: "DynaPuff";
+	--font-1: "Merriweather";
+}
+
+
+body {
+  background-color: var(--cor-0);
+  padding: 0px;
+  margin: 0px;
+  font-family: var(--font-0);
+  height: 100%;
+width: 100%;
+}
+
+h3,h4{
+	margin: 0px;
+	padding: 0;
+}
+
+.margin_bottom_20{
+	margin-bottom: 20px;
+}
+
+.disabled {
+	pointer-events: none;
+	cursor: default;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"] {
+    -webkit-appearance: none;
+	-moz-appearance: textfield !important;
+    margin: 0;
+}

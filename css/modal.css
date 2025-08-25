@@ -1,0 +1,264 @@
+.modal {
+  padding: 40px;
+  background-color: var(--cor-1);
+  position: relative;
+  border: solid 2px var(--cor-2);
+  border-radius: 4px;
+  width: fit-content;
+  display: flex;
+}
+
+.add_modal {
+	padding: 30px 10px 40px 40px;
+	height: 160px;
+	flex-direction: column;
+}
+
+.add_modal h3,
+.container_removal_data h3{
+	margin-bottom: 10px;
+	color: var(--cor-3);
+	text-decoration: underline;
+	text-decoration-color: var(--cor-2);
+	text-decoration-thickness: 1px;
+}
+
+.removal_data_msg_mobile{
+	display: none;
+}
+
+.container_removal_data h3{
+	display: inline;
+}
+
+.container_removal_data span{
+	margin-right: 10px;
+}
+
+.x {
+  position: absolute;
+  top: -15px;
+  right: -10px;
+  background-color: red;
+  border-radius: 50%;
+  width: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--cor-3);
+  text-shadow: 1px 1px 1px black;
+}
+
+.add_transaction_modal_section, 
+.remove_transaction_modal_section, 
+.user_settings_modal_section{
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  margin-inline: auto;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+  display: none;
+  justify-content: center;
+  text-justify: center;
+  align-items: center;
+}
+
+
+.transaction_add_modal_button, 
+.transaction_removal_modal_button, 
+.settings_modal_button{
+	margin: 0 auto;
+	border: 1px solid var(--cor-2);
+	border-radius: 10px;
+	color: var(--cor-3);
+	background-color: var(--cor-0);
+	position: absolute;
+	bottom: 10px;
+	right: 20px;
+	padding: 5px 10px;
+	font-family: var(--font-0);
+}
+
+.transaction_add_modal_button:hover , 
+.transaction_removal_modal_button:hover ,
+.settings_modal_button:hover{
+  background-color: #1b2027;
+  cursor: pointer;
+}
+
+.removal_modal_button{
+	display: none;
+}
+
+.transaction_add_data{
+	display: grid;
+	grid-template-columns: repeat(3,113px);
+	grid-gap: 1px;
+	grid-template-rows: repeat(5,24px);
+}
+
+.transaction_add_data label {
+	color: var(--cor-3);
+	grid-column: 1;
+	text-justify: center;
+	margin-left: 10px;
+}
+
+.transaction_add_data input ,
+#transaction_group{
+	border-radius: 4px;
+	background-color: var(--cor-0);
+	border:1px solid var(--cor-3); 
+	color: var(--cor-3);
+	display: inline-block;
+	font-family: var(--font-1);
+	font-size: 0.8rem;
+	width: 97px;
+}
+
+.transaction_add_data input:focus{
+	background-color: var(--cor-2);
+	box-shadow: 0px 0px 3px 1px  white;
+	color: black;
+}
+
+#transaction_date{
+	width: 100px;
+}
+#transaction_group {
+	width: 103px;
+	margin-top: 3px;
+	justify-self: center;
+}
+
+legend {
+	text-align: center;
+	color: var(--cor-3);
+}
+
+fieldset {
+	border-radius: 10px;
+	border-color: var(--cor-2);
+	grid-column: 3;
+	grid-row: 1/5;
+	width: 80px;
+	justify-self: center;
+}
+
+fieldset input {
+	margin: 0;
+	padding: 0;
+	width: min-content !important;
+}
+
+fieldset label{
+	margin: 0 !important;
+}
+
+.container_removal_data{
+	color: var(--cor-3);
+	align-content: center;
+}
+
+.removal_modal{
+	gap: 20px;
+}
+
+.container_removal_data p{
+	display: inline-block;
+	margin: 3px 5px;
+	
+}
+
+.removal_transaction_data_title{
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
+}
+
+.container_selection{
+	align-content: center;
+}
+
+#selection_transaction{
+	background-color: var(--cor-2);
+	color: var(--cor-3);
+	border-radius: 4px;
+	display: inline-block;
+	height: 40px;
+	box-shadow: 0px 0px 5px 0px white;
+	font-family: var(--font-1);
+}
+
+.flex {
+  	display: flex;	
+}
+
+.block{
+	display: block;
+}
+
+@media(max-width:450px){
+	.removal_data_msg{
+		display: none;
+	}
+	.removal_data_msg_mobile{
+		display: block;
+	}
+	.container_removal_data .removal_data_msg_mobile h3{
+		text-align: center;
+		font-size: 0.75rem;
+	}
+	
+	.x{
+		top: -10px;
+		right: -5px;
+		width: 15px;
+		height: 15px;
+	}
+	.add_modal,
+	.removal_modal{
+		font-size: 0.7rem;
+		width: 65%;
+	}
+	
+	.transaction_add_data{
+		grid-template-columns: 1fr 1fr;
+	}
+	.transaction_add_data label{
+		align-self: center;
+		
+	}
+	fieldset{
+		grid-column: 1/2;
+		grid-row: 6/7;
+		width: fit-content;
+	}
+	#transaction_group{
+		height: fit-content;
+		align-self: center;
+	}
+	.add_modal{
+		padding-left: 10px;
+		height: 220px;
+	}
+	
+	.add_modal h3,
+	.removal_modal h3{
+		font-size: 1rem;
+		text-align: center;
+	}
+	
+	.removal_modal,
+	.user_settings_modal{
+		flex-direction: column;
+	}
+	.container_selection{
+		align-self: center;
+	}
+	
+	#selection_transaction{
+		font-size: 0.7rem;
+	}	
+}

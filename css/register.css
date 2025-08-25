@@ -1,0 +1,261 @@
+.register_main{
+	display: flex;
+	height: 100vh;
+	align-items: center;
+	justify-items: center;
+	flex-direction: column;
+	gap: 0;
+}
+
+.register_title_container{
+	margin-top: 75px;
+}
+
+.register_title{
+	font-size: 2.5rem;
+}
+.register_img{
+	max-width: 135px;
+	margin: 0;
+}
+.register_data_container{
+	margin-top: 60px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: center;
+	background-color: var(--cor-1);
+	max-width: 450px;
+	height: 425px;
+	width: 100%;
+	border: 1px solid var(--cor-2);
+	border-radius: 10px;
+	color: var(--cor-3);
+}
+
+.register_data_title{
+	grid-column: 1/-1;
+	text-align: center;
+}
+
+.register_data_container label{
+	width: fit-content;
+	margin-left: 20px;
+}
+
+.register_data_container input{
+	width: 200px;
+	height: 2rem;
+	border-radius: 4px;
+	font-family: var(--font-0);
+	border: 1px ridge var(--cor-2);
+	outline: none;
+}
+
+#birthday{
+	width: 203px;
+}
+
+#password_label_register{
+	grid-column: 1;
+	grid-row: 6;
+	align-self: end;
+}
+#confirmpassword_label_register{
+	grid-column: 2;
+	grid-row: 6;
+	margin-left: 15px;
+	align-self: end;
+}
+
+.container_register_password,
+.container_register_confirmpassword{
+	position: relative;
+	margin-left: 15px;
+}
+
+.container_register_password input,
+.container_register_confirmpassword input{
+	width: 180px;
+}
+
+.container_register_password{
+	grid-column: 1;
+	grid-row: 7;
+	
+}
+.container_register_confirmpassword{
+	grid-column: 2;
+	grid-row: 7;
+
+}
+
+.password_visibility_register,
+.passwordconfirm_visibility_register{
+	width: 24px;
+	position: absolute;
+	right: 28px;
+	top: 6px;
+}
+
+.password_visibility_register:hover,
+.passwordconfirm_visibility_register:hover{
+	cursor: pointer;
+}
+
+.register_button_container{
+	display: flex;
+	justify-content: end;
+	margin-right: 15px;
+	
+}
+.register_button_container button {
+	margin: 0 5px;
+	padding: 5px;
+	border-radius: 5px;
+	font-family: var(--font-0);
+	border: 1px solid var(--cor-3);
+}
+
+.confirm {
+	background-color: var(--cor-2);
+	color: var(--cor-3);
+}
+
+.confirm[disabled='true']{
+	background-color: #008a90;
+}
+
+.confirm[disabled='true']:hover{
+	background-color: #008a90;
+	cursor: default;
+}
+
+.confirm:hover {
+  	background-color: #00959C;
+  	cursor: pointer;
+}
+.back:hover{
+	background-color: #D9D9D9;
+	cursor: pointer;
+}
+
+@media(max-width:1400px){
+	.register_main{
+		flex-direction:row;
+		justify-content: center;
+		gap: 80px;
+	}
+	
+	.register_title_container{
+		flex-direction:column;
+		align-items: center;
+		margin: 0;
+	}
+	.register_img{
+		margin: 0;
+	}
+	.register_title{
+		margin: 0;
+	}
+	.register_data_container{
+		margin: 0;
+	}
+	
+}
+
+@media(max-width:820px){
+	.register_main{
+		flex-direction: column;
+		justify-content: start;
+		gap:0;
+	}
+	
+	
+	.register_img{
+		max-width: 100px;
+		margin-top:10px;
+		align-self: center;
+		margin: 0;
+		margin-top: 20px;
+		
+	}
+	.register_title{
+		font-size: 1.5rem;
+		margin: 0;
+	}
+	.register_data_title{
+		font-size: 1.1rem;
+		text-align: center;
+		
+	}
+	
+	.register_data_container{
+		grid-template-columns: 1fr;
+		max-width: 300px;
+		margin-top: 10px;
+		margin-bottom: 140px;
+		grid-gap: 3px;
+		height: 475px;
+	}
+	
+	.register_data_container label{
+		font-size: 0.9rem;
+		grid-column: 1;
+	}
+	
+	.register_data_container input{
+		width: 250px;
+		grid-column: 1;
+		margin-left: 20px;
+		margin-bottom: 5px;
+	}
+	
+	#confirmpassword_label_register,
+	.container_register_confirmpassword{
+		grid-column: 1;
+	}
+	.birthday_label{
+		grid-row: 6;
+	}
+	#birthday{
+		grid-row: 7;
+		width: 253px;
+	}
+	#email_label_register{
+		grid-row: 8;
+	}
+	#email{
+		grid-row: 9;
+	}
+	#password_label_register{
+		grid-row: 10;
+	}
+	.container_register_password{
+		grid-row: 11;
+		margin-left: 20px;
+	}
+	.container_register_password #password{
+		margin: 0;
+		margin-bottom: 5px;
+	}
+	#confirmpassword_label_register{
+		grid-row: 12;
+		margin-left: 20px;
+	}
+	.container_register_confirmpassword{
+		grid-row: 13;
+		margin-left: 20px;
+		
+	}
+	.container_register_confirmpassword #password_confirm{
+		margin: 0;
+	}
+	
+	.register_button_container{
+		grid-column: 1;
+		grid-row: 14;
+		margin-top: 5px;
+	}
+	
+	
+}

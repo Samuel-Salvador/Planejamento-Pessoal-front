@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planejamento Pessoal - Cadastro</title>
+	<link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../style.css"> 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<main class="register_main">
+		<div class="register_title_container register_margin_top">
+			<img class="register_img" src="../img/Logo.png" alt="Logo">
+			<h1 class="register_title">Planejamento<br><span>Pessoal</span></h1>
+		</div>
+		<form class="register_data_container" name="register">
+			<h2 class="register_data_title">Cadastro</h2>
+			
+			<label for="fullname">Nome Completo: </label>
+			<input name="fullname" type="text" id="fullname">
+			
+			
+			<label for="login">Nome de Usuário: </label>	
+			<input name="login" type="text" id="login">
+			<label class="birthday_label" for="birthday">Data de Nascimento: </label>
+			<input name="birthday" type="date" id="birthday">
+			
+						
+			
+			<label id="email_label_register" for="email">Email: </label>
+			<input name="email" type="email" id="email">
+			
+			<br>
+			<label for="password" id="password_label_register">Senha: </label>
+			<div class="container_register_password">
+				<input name="password" type="password" id="password">
+				<img class="password_visibility_register visibility_off" src="../img/input_visibility_off.png">
+			</div>
+			
+			<label for="password_confirm" id="confirmpassword_label_register">Confirme a senha: </label>
+			<div class="container_register_confirmpassword">
+				<input name="password_confirm" type="password" id="password_confirm">
+				<img class="passwordconfirm_visibility_register visibility_off" src="../img/input_visibility_off.png">
+			</div>
+			
+			<div class="register_button_container">
+				<button class="confirm" type="button">Confirmar</button>
+				<button class="back" type="button">Voltar</button>
+			</div>
+			
+		</form>
+	</main>
+
+	<script type="module" src="../modules/register.js"></script>
+</body>
+
+</html>

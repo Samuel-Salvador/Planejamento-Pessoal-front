@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Planejamento Pessoal - Financeiro</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+	<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+	<body>
+    <header class="header">
+
+        <div class="header_title_container">
+            <img class="header_img" src="../img/Logo.png" alt="Logo">
+            <h1 class="header_title">Planejamento<br><span>Pessoal</span></h1>
+        </div>
+
+		
+		<div class="user_links">
+			<!-- 
+			<nav>
+			    <a href="finance.html">Financeiro</a>
+				<div class="divisor"></div>
+			</nav>
+			-->
+			<div class="container_balance">
+				<div class="balance">
+					<p>Saldo</p>
+					<span></span>
+					<ul class="balance_management_list">
+						<li class="balance_management_item plus_income"><img src="../img/salary.png">+Salário</li>
+						<li class="balance_management_item minus_invoice"><img src="../img/pay_bill.png">-Fatura</li>
+					</ul>
+				</div>
+				<img img_visibility_on class="balance_visibility_img" src="../img/visibility_on.png">
+			</div>
+			
+			<div class="container_user_name">
+				<p class="user_name"></p>
+				<img class="img_arrow_drop_down" src="../img/arrow_drop_down.png">
+				<ul class="dropdown-menu dropdown-menu_user">
+					<li class="settings_dropdown"><img src="../img/settings.png"><a>Configurações</a></li>
+					<li class="logout"><img src="../img/logout.png"><a>Sair</a></li>
+				</ul>
+			</div>
+		</div>
+        
+
+        
+    </header>
+
+    <main class="finance_main">
+		<div class="container_nav_months">
+			<a href="./" class="left_arrow arrow">←</a>
+			<div class="container_text_nav_months">
+				<h2>Gastos 
+					<span class="current_month"></span>
+					de
+					<span class="current_year"></span>
+				</h2>
+			</div>
+			<a href="./" class="right_arrow arrow">→</a>
+		</div>
+		
+        <div class="container_transactions">
+            
+		    <span class="divisor"></span>
+				
+		    <div class="container_transactions_column" id="transactions_column_name">
+		    	<p class="transactions_column_title">Nome</p>
+		    </div>
+		    <div class="container_transactions_column" id="transactions_column_date">
+		    <p class="transactions_column_title">Data</p>
+		
+		    </div>
+			<div class="container_transactions_column" id="transactions_column_type">
+				<p class="transactions_column_title">Tipo</p>
+		
+			</div>
+		    <div class="container_transactions_column" id="transactions_column_category">
+		        <p class="transactions_column_title">Categoria</p>
+		
+		    </div>
+		
+		
+		    <div class="container_transactions_column" id="transactions_column_installments">
+		    	<p class="transactions_column_title">Parcelas</p>
+		
+		    </div>
+		    <div class="container_transactions_column" id="transactions_column_price">
+		        <p class="transactions_column_title">Preço</p>
+		    </div>
+				
+        </div>
+		
+		<div class="left_side_panel">
+			<div class="transaction_group_selection">
+				<h4>Grupo:</h4>						
+				<select id="transaction_group_main" name="group">	
+										
+				</select>
+			</div>		
+		</div>
+					
+		<div class="right_side_panel">	
+			<div class="container_management_transactions container_add">
+				<a class="add_transaction_button">+</a>
+			</div>
+								
+			<div class="container_management_transactions container_remove">
+				<a class="remove_transaction_button"><img class="delete_transaction_img" src="../img/delete.png"></a>			
+			</div>
+			<div class="container_total">
+				<div class="credit_card_total">
+					<p>TOTAL FATURA</p> 
+					<span></span>
+				</div>
+				<div class="not_credit_card_total">
+					<p>TOTAL DÉBITOS</p>
+					<span></span>
+				</div>
+			</div>
+		</div>
+		<div class="container_chart">
+			<canvas id="category_chart"></canvas>
+		</div>
+    </main>
+	
+    <section class="add_transaction_modal_section">
+		
+        <form class="modal add_modal" name="transaction_add_form">
+			<a class="x_add x" href="">X</a>
+			
+			<h3>Adicionar Transação</h3>
+			<div class="transaction_add_data">
+	            <label for="transaction_name">Nome: </label>
+	            <input name="name" type="text" id="transaction_name" required autocomplete="off">
+				
+	            <label for="transaction_category">Categoria: </label>
+	            <input name="category" type="text" id="transaction_category">
+				
+	
+	            <label for="transaction_date">Data: </label>
+	            <input name="date" type="date" id="transaction_date" required>
+	
+	            <label for="transaction_installments">Parcelas: </label>
+	            <input name="installments" type="number" id="transaction_installments" required>
+				
+	            <label for="transaction_price">Preço: </label>
+	            <input name="price" type="number" id="transaction_price" required>
+				
+				
+				
+				<fieldset>
+					<legend>Tipo</legend>
+						
+					<div>
+						<input type="radio" id="transaction_credit" name="type" value="Crédito">
+						<label for="transaction_credit">Crédito</label>
+					</div>
+					<div>
+						<input type="radio" id="transaction_debit" name="type" value="Débito">
+						<label for="transaction_debit">Débito</label>
+					</div>
+					<div>
+						<input type="radio" id="transaction_pix" name="type" value="Pix">
+						<label for="transaction_pix">Pix</label>
+					</div>
+				</fieldset>
+				<select id="transaction_group" name="group">	
+					
+				</select>	
+			</div>
+            <button type="button" class="transaction_add_modal_button">Confirmar</button>
+        </form>
+
+    </section>
+	
+	<section class="remove_transaction_modal_section">	
+		<form class="modal removal_modal" name="transaction_remove_form">
+			<a class="x_removal x" href="">X</a>
+			<div class="container_selection">
+				<select id="selection_transaction" name="selection">	
+					<option value="" selected disabled hidden>Selecione</option>
+				</select>	
+			</div>
+			
+			<div class="container_removal_data">
+				<div class="removal_data_msg">
+					<span>←</span><h3>Selecione a transação a ser removida </h3>
+									
+				</div>
+				<div class="removal_data_msg_mobile">
+					<h3>Selecione a transação a ser removida</h3>								
+				</div>
+								
+				
+			</div>	
+			<div class="removal_modal_button">
+				<button class="transaction_removal_modal_button" type="button">Confirmar</button>
+			</div>
+			
+		</form>
+	</section>
+	
+	<section class="user_settings_modal_section">
+		<div class="modal user_settings_modal">
+			<div class="container_settings_menu">
+				<h3 class="settings_menu_title">Menu</h3>
+				<ul class="settings_menu_list">
+					<li class="settings_menu_list_item" data-content="account_data">Dados <img class="active_option_img" src="../img/arrow_right.png"></li>
+					<li class="settings_menu_list_item finance_item">Financeiro <img class="settings_menu_img_dropdown img_arrow_drop_down" src="../img/arrow_drop_down.png"></li>
+					<ul class="dropdown-menu finance_menu_list">
+						<li class="finance_menu_list_item" data-content="finance_group"><a>Grupos</a></li>
+					</ul>	
+					<li class="settings_menu_list_item delete_account" data-content="delete_account">Excluir Conta</li>
+				</ul>
+				<span class="settings_divisor"></span>
+			</div>
+			<div class="container_settings_inner_content">
+				<a class="x_settings x" href="">X</a>
+				<form name="settings_account_data" class="settings_account_data">
+					<h3 class="settings_account_data_title">Dados do usuário</h3>
+					
+					<div class="container_fullname_settings">
+						<label for="user_settings_fullname_input">Nome: </label>
+						<input name="fullname" type="text" id="user_settings_fullname_input" disabled >
+					</div>
+					<div class="container_username_settings">
+						<label for="user_settings_username_input">Nome de Usuário: </label>
+						<input name="username" type="text" id="user_settings_username_input" disabled autocomplete="off">
+					</div>
+					<div class="container_birthday_settings">
+						<label for="user_settings_birthday_input">Data de Nascimento: </label>
+						<input name="birthday" type="text" id="user_settings_birthday_input" disabled>
+					</div>
+					<div class="container_email_settings">
+						<label for="user_settings_email_input">Email: </label>
+						<input name="email" type="email" id="user_settings_email_input" disabled autocomplete="off">
+					</div>			
+					<div class="container_password_settings">
+						<label for="user_settings_password_input">Senha: </label>
+						<input name="password" type="password" id="user_settings_password_input" placeholder="••••••••••••"  disabled>
+						<img id="img_visibility_off" class="settings_password_visibility" src="../img/visibility_off.png">
+					</div>
+					<div class="container_income_balance_settings">
+						<label for="user_settings_income_input" id="user_settings_income_label">Salário: </label>
+						<input name="income" type="number" id="user_settings_income_input">
+						<label for="user_settings_balance_input" id="user_settings_balance_label">Saldo: </label>
+						<input name="balance" type="number" id="user_settings_balance_input">
+						<label for="user_settings_invoice_closingdate_input" id="user_settings_invoice_closingdate_label">Dia fechamento da fatura: </label>
+						<select id="user_settings_invoice_closingdate_input">
+						    
+						</select>
+					</div>
+					
+					<button class="settings_modal_button" type="button">Salvar</button>
+				</form>
+			</div>
+		</div>
+	</section>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="../script.js"></script>
+</body>
+
+</html>

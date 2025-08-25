@@ -1,0 +1,173 @@
+@import "./global.css";
+
+.login_main{
+	display: flex;
+	height: 100vh;
+	align-items: center;
+	justify-items: center;
+	flex-direction: column;
+}
+
+.login_title_container{
+	justify-items: center;
+}
+
+.login_img{
+	max-width: 125px;
+	max-height: 100%;
+	align-self: center;
+	justify-self: center;
+	margin-top: 75%;
+}
+
+.login_title,.login_signin_title{
+	text-align: center;
+	color: var(--cor-3);
+	
+}
+
+.login_title {
+	margin-top: 0;
+	font-size: 2.2rem;
+}
+
+.login_signin_title{
+	margin-bottom: 30px;
+}
+
+.container_login{
+	margin: 0 auto;
+	max-width: 375px;
+	width: 100%;
+	background-color: var(--cor-1);
+	border: 1px solid var(--cor-2);
+	border-radius: 10px;
+	max-height: 335px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login_input{
+	width: 225px;
+	height: 2rem;
+	border-radius: 4px;
+	font-family: var(--font-0);
+	border: 1px ridge var(--cor-0);
+	outline: none;
+}
+#user_name {
+	margin-bottom: 10px;
+}
+.container_password_login{
+	position: relative;
+	width: fit-content;
+	margin-bottom: 10px;
+}
+
+.password_visibility_login{
+	width: 24px;
+	position: absolute;
+	right: 5px;
+	top: 6px;
+}
+
+.password_visibility_login:hover{
+	cursor: pointer;
+}
+.container_checkbox_login{
+	display: flex;
+	gap: 5px;
+	align-self: center;
+	user-select: none;
+}
+
+.login_input_checkbox{
+	accent-color:var(--cor-2);
+	
+}
+.remember_label{
+	font-size: 0.8rem;
+	align-self: center;
+	color: var(--cor-3);
+}
+
+.login_button{
+	width: 100px;
+	height: 25px;
+	font-size: 1.1rem;
+	align-self: center;
+	margin-top: 35px;
+	background-color: var(--cor-3);
+	border: 1px solid var(--cor-2);
+	border-radius: 4px;
+	font-family: var(--font-0);
+	cursor: pointer;
+	color: #1e1e1e;
+}
+
+.login_button:hover{
+	background-color: #D9D9D9;
+}
+
+.login_register_anchor{
+	align-self: center;
+	margin: 40px 0 20px 0;
+	font-family: var(--font-1);
+	font-size: 0.8rem;
+	font-weight: bold;
+	color: var(--cor-3);
+	width: fit-content;
+	text-decoration: none;
+}
+
+.login_register_anchor:hover{
+	text-decoration: underline;
+	
+}
+
+.login_error{
+	outline: 1px solid red;
+	outline-color: red;
+}
+
+.login_error:focus{
+	outline: none;
+}
+@media(max-width:1400px){
+	.login_img{
+		margin-top:30px;
+	}
+}
+@media(max-width:750px){
+	.login_main{
+		align-self: start;
+	}
+	.login_img{
+		max-width: 100px;
+		margin-top:100px;
+	}
+	.login_signin_title{
+		font-size: 1.2rem;
+		
+	}
+	.login_title{
+		font-size: 1.5rem;
+		
+	}
+	.container_login{
+		max-width: 300px;
+	}
+	.login_input{
+		width: 200px;
+		align-self: center;
+	}
+	.login_main{
+		height: fit-content;
+	}
+	body{
+		height: 100vh;
+	}
+	
+}

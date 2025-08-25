@@ -1,0 +1,19 @@
+
+.finance_menu_list{
+	list-style: none;
+	flex-direction: column;
+	
+}
+
+.finance_menu_list_item{
+	margin: 0 0 2px 40px;
+	display: flex;
+	
+}
+
+.finance_menu_list_item:hover{
+	color: var(--cor-3);
+	cursor: pointer;
+}
+
+
