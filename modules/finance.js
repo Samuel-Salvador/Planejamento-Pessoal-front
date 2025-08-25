@@ -5,9 +5,10 @@ import { createOptionSelectionGroup, openAdditionModal} from "./addModal.js";
 import {openRemovalModal} from "./removeModal.js";
 import { fetchUser, userData } from './header.js';
 import {removeChart, setUpChart} from './categoryChart.js'
+import {urlFront} from "./global.js";
 
 if(sessionStorage.userId==null){
-	location.assign(global.url);
+	location.assign(global.urlFront);
 }
 
 await fetchUser();

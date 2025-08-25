@@ -1,4 +1,4 @@
-import {userClickEvents,formattedDate,url} from "./global.js";
+import {userClickEvents, formattedDate, urlAPI, urlFront} from "./global.js";
 import { userUrl } from "./login.js";
 import {userData,fetchUser,updateBalanceHeader} from "./header.js";
 import { addModalTransactionGroupSelect, createOptionSelectionGroup } from "./addModal.js";
@@ -256,7 +256,7 @@ async function changeCurrentMenuItem(menuItem){
 		
 		userClickEvents.forEach((userEvent)=>{
 			deleteAccountButton.addEventListener(userEvent,()=>{
-				location.assign(url);
+				location.assign(urlFront);
 				fetch(userUrl,{method: "DELETE"});
 			})
 			

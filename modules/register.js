@@ -1,4 +1,4 @@
-import {formValidated,url,userClickEvents} from "./global.js";
+import {formValidated, urlAPI, urlFront, userClickEvents} from "./global.js";
 
 
 let visibilityPasswordEyeImg = document.querySelector('.password_visibility_register');;
@@ -7,7 +7,7 @@ const passwordInputElement = document.getElementById('password');
 const confirmPasswordInputElement = document.getElementById('password_confirm');
 const confirmButton = document.querySelector(".confirm");
 
-if(location.toString()==url+"html/register.html"){
+if(location.toString()==urlFront+"html/register.html"){
 	
 	const backButton = document.querySelector(".back");
 	confirmButton.removeAttribute('disabled');
@@ -20,7 +20,7 @@ if(location.toString()==url+"html/register.html"){
 		backButton.addEventListener(userEvent,(event)=>{
 			event.preventDefault();
 			event.stopPropagation();
-			location.assign(url);
+			location.assign(urlFront);
 		});
 		
 		confirmButton.addEventListener(userEvent,(event)=>{
@@ -80,7 +80,7 @@ function register(){
 						email: userEmail,
 						password: userPassword})
 			};
-			fetch(url+'users', options).then(()=>{location.assign(url)});
+			fetch(urlAPI+'users', options).then(()=>{location.assign(urlFront)});
 	}
 }
 

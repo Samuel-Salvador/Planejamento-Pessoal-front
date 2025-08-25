@@ -1,10 +1,10 @@
-import { url,userClickEvents} from "./global.js";
+import {urlAPI, urlFront, userClickEvents} from "./global.js";
 
 export let loggedUserId = sessionStorage.userId;
 
-export let userUrl = url+`users/${loggedUserId}`;
+export let userUrl = urlAPI+`users/${loggedUserId}`;
 
-export let transactionUrl = url+`transactions/${loggedUserId}`;
+export let transactionUrl = urlAPI+`transactions/${loggedUserId}`;
 
 let visibilityEyeImg = document.querySelector('.password_visibility_login');;
 const passwordInputElement = document.querySelector('.login_password');
@@ -39,7 +39,7 @@ function changePasswordVisibility(){
 	}
 }
 
-if(location.toString()==url){
+if(location.toString()==urlFront){
 	visibilityEyeImg = document.querySelector('.password_visibility_login');
 	userClickEvents.forEach((userEvent)=>{
 		visibilityEyeImg.addEventListener(userEvent,(event)=>{
@@ -69,7 +69,7 @@ if(location.toString()==url){
 		})
 	}else{
 		sessionStorage.userId = localStorage.userId;
-		location.assign(url+"html/finance.html");
+		location.assign(urlFront+"html/finance.html");
 	}
 	
 	async function login(event){
@@ -78,7 +78,7 @@ if(location.toString()==url){
 		const userPassword = document.forms.login.password.value;
 		const rememberCheckBox = document.forms.login.remember.checked;
 		
-		const responseUsers = await fetch(url+`users`);
+		const responseUsers = await fetch(urlAPI+`users`);
 		const usersJSON = await responseUsers.json();
 	
 		for(let i=0;i<usersJSON.length;i++){
@@ -89,9 +89,9 @@ if(location.toString()==url){
 					}
 				sessionStorage.userId = usersJSON[i].id;
 				loggedUserId = usersJSON[i].id;
-				userUrl = url+`users/${loggedUserId}`;
-				transactionUrl = url+`transactions/${loggedUserId}`;
-				location.assign(url+"html/finance.html");
+				userUrl = urlAPI+`users/${loggedUserId}`;
+				transactionUrl = urlAPI+`transactions/${loggedUserId}`;
+				location.assign(urlFront+"html/finance.html");
 				removeOutline(userNameElement);
 				removeOutline(userPasswordElement);
 			}else{	
