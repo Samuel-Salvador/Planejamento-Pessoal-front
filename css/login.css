@@ -4,20 +4,22 @@
 	display: flex;
 	height: 100vh;
 	align-items: center;
-	justify-items: center;
+	justify-content: center;
 	flex-direction: column;
+
 }
 
 .login_title_container{
-	justify-items: center;
+    display: flex;
+    flex-direction: column;
+	justify-content: center;
+
 }
 
 .login_img{
 	max-width: 125px;
 	max-height: 100%;
 	align-self: center;
-	justify-self: center;
-	margin-top: 75%;
 }
 
 .login_title,.login_signin_title{
