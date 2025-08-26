@@ -1,7 +1,7 @@
 export const testAPI = `http://127.0.0.1:3030/`;
 export const prodAPI = `https://plan-pessoal-93978f82c0a7.herokuapp.com/`;
 export const urlAPI = testAPI;
-export const urlFront = 'http://127.0.0.1:8000/';
+export const urlFront = 'https://planejamento-pessoal.vercel.app/';
 
 export const dateOptions = {
 	day: 'numeric',
