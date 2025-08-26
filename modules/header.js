@@ -105,11 +105,11 @@ async function depositIncome(){
 							},
 					body: JSON.stringify({	
 						balance: newBalance,
-						transactionGroups: userData.transactionGroups
+						invoiceClosingDate: userData.invoiceClosingDate
 					}),
 					};
 	fetch(userUrl,options);
-	updateBalanceHeader();
+	await updateBalanceHeader();
 	dataSettingBalanceInput.setAttribute("placeholder",newBalance.toFixed(2));
 }
 
@@ -117,19 +117,18 @@ async function payInvoice(){
 	await fetchUser();
 
 	const newBalance = userData.balance-invoiceNumber;
-	console.log(invoiceNumber)
+
 	const options= {method: "PUT",
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
 							},
 					body: JSON.stringify({	
 						balance: newBalance,
-						transactionGroups: userData.transactionGroups
-						
+
 					}),
 					};
 	fetch(userUrl,options);
-	updateBalanceHeader();
+	await updateBalanceHeader();
 	dataSettingBalanceInput.setAttribute("placeholder",newBalance.toFixed(2));
 
 }

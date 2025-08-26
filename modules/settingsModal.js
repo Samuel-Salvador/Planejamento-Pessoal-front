@@ -33,7 +33,7 @@ function clickOutsideModal(event){
 
 function populateInvoiceDueDate(){
 	
-	for(let i=1;i<=31;i++){
+	for(let i=1;i<=28;i++){
 		const option = document.createElement("option");
 		option.innerHTML=i;
 		option.setAttribute("value",i);
@@ -99,14 +99,14 @@ async function handleAddTransactionGroupButton(){
 	await fetchUser();
 	
 	const financeGroupInput = document.forms.transaction_group_form.transaction_group.value.trimEnd();
-	const arrayTransactionGroups = userData.transactionGroups.concat(financeGroupInput);
+
 	
 	const options = {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json; charset=utf-8",
 		},
-		body: JSON.stringify({transactionGroups: arrayTransactionGroups})
+		body: JSON.stringify({transactionGroup: financeGroupInput})
 	}
 	fetch(userUrl,options);
 	await fetchUser();
@@ -126,9 +126,7 @@ async function handleRemoveTransactionGroupButton(){
 	
 	
 	if(financeGroupInput==="Dia a dia" || !arrayTransactionGroups.some((item)=>item===financeGroupInput)){
-		
-		
-		
+
 		updateUserMsg.innerHTML = `Não é possível remover este grupo, certifique-se que ele existe ou é diferente do grupo padrão.`;
 		updateUserMsg.setAttribute("class","update_user_msg failed_update");
 		
@@ -143,7 +141,7 @@ async function handleRemoveTransactionGroupButton(){
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",
 			},
-			body: JSON.stringify({transactionGroups: arrayTransactionGroups})
+			body: JSON.stringify({transactionGroup: -financeGroupInput})
 		}
 		await fetch(userUrl,options);
 		removeTransactionGroupFromDOM(financeGroupInput);
@@ -367,8 +365,7 @@ async function handleSaveButton(saveDataButton){
 							},
 					body: JSON.stringify({	income: incomeFormValue,
 											balance: balanceFormValue,
-											invoiceClosingDate: invoiceClosingDateValue,
-											transactionGroups: userData.transactionGroups
+											invoiceClosingDate: invoiceClosingDateValue
 					}),
 				};
 	}
@@ -379,9 +376,7 @@ async function handleSaveButton(saveDataButton){
 								"Content-Type": "application/json; charset=utf-8",
 							},
 					body: JSON.stringify({	income: incomeFormValue,
-											balance: 0,
-											invoiceClosingDate: invoiceClosingDateValue,
-											transactionGroups: userData.transactionGroups
+											invoiceClosingDate: invoiceClosingDateValue
 					}),
 				};
 	}
@@ -391,10 +386,9 @@ async function handleSaveButton(saveDataButton){
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
 							},
-					body: JSON.stringify({	income: 0,
+					body: JSON.stringify({
 											balance: balanceFormValue,
-											invoiceClosingDate: invoiceClosingDateValue,
-											transactionGroups: userData.transactionGroups
+											invoiceClosingDate: invoiceClosingDateValue
 					}),
 				};
 	}
@@ -404,10 +398,8 @@ async function handleSaveButton(saveDataButton){
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
 							},
-					body: JSON.stringify({	income: 0,
-											balance: 0,
-											invoiceClosingDate: invoiceClosingDateValue,
-											transactionGroups: userData.transactionGroups
+					body: JSON.stringify({
+											invoiceClosingDate: invoiceClosingDateValue
 					}),
 				};
 	}

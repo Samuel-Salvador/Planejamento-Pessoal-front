@@ -39,7 +39,7 @@ function changePasswordVisibility(){
 	}
 }
 
-if(location.toString()==urlFront){
+if(location.toString() == urlFront){
 	visibilityEyeImg = document.querySelector('.password_visibility_login');
 	userClickEvents.forEach((userEvent)=>{
 		visibilityEyeImg.addEventListener(userEvent,(event)=>{

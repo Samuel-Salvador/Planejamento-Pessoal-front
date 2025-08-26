@@ -65,10 +65,9 @@ async function httpPostTransaction(){
 									headers:{	
 												"Content-Type": "application/json; charset=utf-8",
 											},
-									body: JSON.stringify({	income: 0,
+									body: JSON.stringify({
 															balance: userData.balance-formValuePrice,
 															invoiceClosingDate: userData.invoiceClosingDate,
-															transactionGroups: userData.transactionGroups
 									}),
 								};
 				await fetch(userUrl,options);
@@ -87,7 +86,7 @@ async function httpPostTransaction(){
 									    category: formValueCategory,
 									    type: formValueType,
 										group: formValueGroup,
-										user: loggedUserId}),
+										userId: loggedUserId}),
 				};
 				await postAndAddLastTransactionToArray(options);
 				resetFormValues();
