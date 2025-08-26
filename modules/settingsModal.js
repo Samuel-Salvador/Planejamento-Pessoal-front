@@ -106,9 +106,12 @@ async function handleAddTransactionGroupButton(){
 		headers: {
 			"Content-Type": "application/json; charset=utf-8",
 		},
-		body: JSON.stringify({transactionGroup: financeGroupInput})
+		body: JSON.stringify({
+            transactionGroup: financeGroupInput,
+            invoiceClosingDate: userData.invoiceClosingDate
+        })
 	}
-	fetch(userUrl,options);
+	await fetch(userUrl,options);
 	await fetchUser();
 	addTransactionGroupToDom(financeGroupInput);
 	createOptionSelectionGroup(userData.transactionGroups.length-1,addModalTransactionGroupSelect);
@@ -134,6 +137,7 @@ async function handleRemoveTransactionGroupButton(){
 	}else{
 	
 		const indexForRemoval = arrayTransactionGroups.indexOf(financeGroupInput);
+        const deletionString = "-".concat(financeGroupInput);
 		arrayTransactionGroups.splice(indexForRemoval,1);
 
 		const options = {
@@ -141,7 +145,10 @@ async function handleRemoveTransactionGroupButton(){
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",
 			},
-			body: JSON.stringify({transactionGroup: -financeGroupInput})
+			body: JSON.stringify({
+                transactionGroup: deletionString,
+                invoiceClosingDate: userData.invoiceClosingDate
+            })
 		}
 		await fetch(userUrl,options);
 		removeTransactionGroupFromDOM(financeGroupInput);

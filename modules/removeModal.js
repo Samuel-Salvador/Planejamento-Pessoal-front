@@ -72,10 +72,9 @@ async function removeFromDOMSelectedTransaction(){
 							headers:{	
 								"Content-Type": "application/json; charset=utf-8",
 							},
-							body: JSON.stringify({	income: 0,
+							body: JSON.stringify({
 													balance: userData.balance+transactionsArray[removalCorrectArrayIndex].price,
-													invoiceClosingDate: userData.invoiceClosingDate,
-													transactionGroups: userData.transactionGroups
+													invoiceClosingDate: userData.invoiceClosingDate
 							}),
 			};
 		await fetch(userUrl,options);
@@ -86,7 +85,7 @@ async function removeFromDOMSelectedTransaction(){
 	transactionsArray.splice(removalCorrectArrayIndex,1);
 	
 	setTotal(transactionsArray);
-	setUpChart();
+	await setUpChart();
 	resetRemovalModal();
 	
 	

@@ -80,7 +80,8 @@ if(location.toString() == urlFront){
 		
 		const responseUsers = await fetch(urlAPI+`users`);
 		const usersJSON = await responseUsers.json();
-	
+        console.log(usersJSON);
+
 		for(let i=0;i<usersJSON.length;i++){
 			if(	usersJSON[i].username === userName &&
 				usersJSON[i].password === userPassword){
