@@ -1,7 +1,7 @@
 import * as global from './global.js';
 import {dataSettingBalanceInput} from './settingsModal.js';
 import {invoiceNumber} from './finance.js';
-import { userUrl } from './login.js';
+import {userUrl, fetchUser, userData, token} from './login.js';
 
 const balanceSPAN = document.querySelector(".balance span");
 const balanceContainer = document.querySelector(".balance");
@@ -10,7 +10,7 @@ const balanceManagementContainer = balanceContainer.querySelector(".balance_mana
 const plusIncomeElement = balanceManagementContainer.querySelector(".plus_income");
 const minusInvoiceElement = balanceManagementContainer.querySelector(".minus_invoice");
 
-export let userData = {};
+
 
 export async function initHeader(){
 
@@ -38,9 +38,7 @@ export async function initHeader(){
 	})
 }
 
-export async function fetchUser(){
-	userData = await fetch(userUrl).then((r)=>r.json());
-}
+
 
 export async function updateBalanceHeader(){
 	
@@ -102,6 +100,7 @@ async function depositIncome(){
 	const options={	method: "PUT",
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
+                                'Authorization': `Bearer ${token}`
 							},
 					body: JSON.stringify({	
 						balance: newBalance,
@@ -120,6 +119,7 @@ async function payInvoice(){
 	const options= {method: "PUT",
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
+                                'Authorization': `Bearer ${token}`
 							},
 					body: JSON.stringify({	
 						balance: newBalance,

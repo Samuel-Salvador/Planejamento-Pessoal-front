@@ -1,10 +1,20 @@
 import {urlAPI, urlFront, userClickEvents} from "./global.js";
-
+//import {userData} from "./header";
+export let userData = {};
 export let loggedUserId = sessionStorage.userId;
-
 export let userUrl = urlAPI+`users/${loggedUserId}`;
-
+export let token = sessionStorage.token;
 export let transactionUrl = urlAPI+`transactions/${loggedUserId}`;
+
+export async function fetchUser(){
+    userData = await fetch(userUrl,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }).then((r)=>r.json());
+}
 
 let visibilityEyeImg = document.querySelector('.password_visibility_login');;
 const passwordInputElement = document.querySelector('.login_password');
@@ -52,7 +62,7 @@ if(location.toString() == urlFront){
 	const userNameElement = document.forms.login.user_name;
 	const userPasswordElement = document.forms.login.password;
 	
-	if(localStorage.userId==null){
+	if(localStorage.userName == null){
 		
 		const loginButton = document.querySelector(".login_button");
 		
@@ -68,39 +78,81 @@ if(location.toString() == urlFront){
 			}
 		})
 	}else{
-		sessionStorage.userId = localStorage.userId;
-		location.assign(urlFront+"html/finance.html");
+		const token = await fetchToken(localStorage.userName, localStorage.password);
+        const userId = getUserIdFromJWT(token);
+        checkUserIdAndAssign(userId);
 	}
 	
 	async function login(event){
 		event.preventDefault();
-		const userName = document.forms.login.user_name.value;
-		const userPassword = document.forms.login.password.value;
+		const userNameInput = document.forms.login.user_name.value;
+		const userPasswordInput = document.forms.login.password.value;
 		const rememberCheckBox = document.forms.login.remember.checked;
-		
-		const responseUsers = await fetch(urlAPI+`users`);
-		const usersJSON = await responseUsers.json();
-        console.log(usersJSON);
 
-		for(let i=0;i<usersJSON.length;i++){
-			if(	usersJSON[i].username === userName &&
-				usersJSON[i].password === userPassword){
-					if(rememberCheckBox){
-						localStorage.userId = usersJSON[i].id;
-					}
-				sessionStorage.userId = usersJSON[i].id;
-				loggedUserId = usersJSON[i].id;
-				userUrl = urlAPI+`users/${loggedUserId}`;
-				transactionUrl = urlAPI+`transactions/${loggedUserId}`;
-				location.assign(urlFront+"html/finance.html");
-				removeOutline(userNameElement);
-				removeOutline(userPasswordElement);
-			}else{	
-				userNameElement.setAttribute("class","login_input login_error");
-				userPasswordElement.setAttribute("class","login_input login_error");
-			}
-		}
+        try{
+            const token = await fetchToken(userNameInput, userPasswordInput);
+            const userId = getUserIdFromJWT(token);
+
+            if(rememberCheckBox){
+                localStorage.userName = userNameInput;
+                localStorage.password = userPasswordInput;
+                localStorage.token = token;
+            }
+
+            checkUserIdAndAssign(userId);
+        } catch(error){
+            return
+        }
 	}
+
+    async function fetchToken(userNameInput, userPasswordInput){
+        const options = {
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({
+                userName: userNameInput,
+                password: userPasswordInput
+            }),
+        }
+        try{
+            const responseJWT = await fetch(urlAPI+`login`, options);
+            if (responseJWT.status === 403){
+                userNameElement.setAttribute("class","login_input login_error");
+                userPasswordElement.setAttribute("class","login_input login_error");
+            }
+            const JWTJSON = await responseJWT.json();
+            sessionStorage.token = JWTJSON.token;
+            return JWTJSON.token;
+        } catch (error){
+            console.error("Usuário não cadastrado!");
+        }
+
+    }
+
+    function checkUserIdAndAssign(userId){
+        if (userId){
+            sessionStorage.userId = userId;
+            loggedUserId = userId;
+            userUrl = urlAPI+`users/${loggedUserId}`;
+            transactionUrl = urlAPI+`transactions/${loggedUserId}`;
+
+
+            removeOutline(userNameElement);
+            removeOutline(userPasswordElement);
+            location.assign(urlFront+"html/finance.html");
+        } else{
+            userNameElement.setAttribute("class","login_input login_error");
+            userPasswordElement.setAttribute("class","login_input login_error");
+        }
+    }
+
+    function getUserIdFromJWT(token) {
+        const payloadBase64 = token.split('.')[1];
+        const payload = JSON.parse(atob(payloadBase64));
+        return payload.id;
+    }
 	
 	function removeOutline(element){
 		element.setAttribute("class","login_input");

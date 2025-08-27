@@ -1,7 +1,7 @@
 import {userClickEvents,formValidated,urlAPI} from "./global.js";
 import {urlMonthInvoice,addTransaction,setTotal,transactionsArray} from "./finance.js";
-import { loggedUserId,userUrl} from "./login.js";
-import { fetchUser, userData,updateBalanceHeader } from "./header.js";
+import { loggedUserId,userUrl, fetchUser, userData, token} from "./login.js";
+import {updateBalanceHeader } from "./header.js";
 import { setUpChart } from "./categoryChart.js";
 import { changePlaceholdersUserData } from "./settingsModal.js";
 
@@ -64,6 +64,7 @@ async function httpPostTransaction(){
 				const options={	method: "PUT",
 									headers:{	
 												"Content-Type": "application/json; charset=utf-8",
+                                                'Authorization': `Bearer ${token}`
 											},
 									body: JSON.stringify({
 															balance: userData.balance-formValuePrice,
@@ -78,6 +79,7 @@ async function httpPostTransaction(){
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json; charset=utf-8",
+                    'Authorization': `Bearer ${token}`
 				},
 				body: JSON.stringify({	name: formValueName,
 									    date: formValueDate,

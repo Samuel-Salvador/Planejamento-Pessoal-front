@@ -1,9 +1,8 @@
 import * as global from './global.js';
-import { transactionUrl } from './login.js';
+import { transactionUrl,fetchUser, userData, token  } from './login.js';
 import * as removeTransaction from "./removeModal.js";
 import { createOptionSelectionGroup, openAdditionModal} from "./addModal.js";
 import {openRemovalModal} from "./removeModal.js";
-import { fetchUser, userData } from './header.js';
 import {removeChart, setUpChart} from './categoryChart.js'
 import {urlFront} from "./global.js";
 
@@ -176,7 +175,13 @@ export function addTransaction(transaction){
 //adds the month transactions to the transactions tab and sets the total for that month
 function addAllTransactions() {
 	
-	fetch(urlMonthInvoice)
+	fetch(urlMonthInvoice,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
 	    	.then((r) => r.json())
 	    	.then((body) => {
 				

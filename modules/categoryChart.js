@@ -1,4 +1,4 @@
-import {fetchUser} from './header.js';
+import {fetchUser} from './login.js';
 import { transactionsArray } from './finance.js';
 
 const chartContainer = document.querySelector(".container_chart");

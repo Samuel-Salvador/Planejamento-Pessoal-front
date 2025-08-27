@@ -1,8 +1,8 @@
 import {transactionsArray,setTotal} from "./finance.js";
 import {formattedDate,formattedPrice,userClickEvents,urlAPI } from "./global.js";
-import { userUrl } from "./login.js";
+import {userUrl, userData, token} from "./login.js";
 import { setUpChart } from "./categoryChart.js";
-import { updateBalanceHeader,userData } from "./header.js";
+import { updateBalanceHeader } from "./header.js";
 import { changePlaceholdersUserData } from "./settingsModal.js";
 
 const removalModal = document.querySelector(".remove_transaction_modal_section");
@@ -71,6 +71,7 @@ async function removeFromDOMSelectedTransaction(){
 			const options={	method: "PUT",
 							headers:{	
 								"Content-Type": "application/json; charset=utf-8",
+                                'Authorization': `Bearer ${token}`
 							},
 							body: JSON.stringify({
 													balance: userData.balance+transactionsArray[removalCorrectArrayIndex].price,
@@ -102,7 +103,13 @@ export function initRemovalModal(){
 		//http DELETE
 		removalButtonConfirm.addEventListener(userEvent,(event)=>{
 				
-				fetch(urlAPI+`transactions/`+removalIdDB,{method: "DELETE"})
+				fetch(urlAPI+`transactions/`+removalIdDB,{
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
 					.then(removeFromDOMSelectedTransaction());
 				closeRemovalModal(event);
 				

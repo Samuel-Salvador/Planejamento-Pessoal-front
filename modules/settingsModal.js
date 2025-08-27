@@ -1,6 +1,6 @@
 import {userClickEvents, formattedDate, urlAPI, urlFront} from "./global.js";
-import { userUrl } from "./login.js";
-import {userData,fetchUser,updateBalanceHeader} from "./header.js";
+import { userUrl,userData,fetchUser, token } from "./login.js";
+import {updateBalanceHeader} from "./header.js";
 import { addModalTransactionGroupSelect, createOptionSelectionGroup } from "./addModal.js";
 import { financeTransactionGroupSelect } from "./finance.js";
 
@@ -105,6 +105,7 @@ async function handleAddTransactionGroupButton(){
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json; charset=utf-8",
+            'Authorization': `Bearer ${token}`
 		},
 		body: JSON.stringify({
             transactionGroup: financeGroupInput,
@@ -144,6 +145,7 @@ async function handleRemoveTransactionGroupButton(){
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",
+                'Authorization': `Bearer ${token}`
 			},
 			body: JSON.stringify({
                 transactionGroup: deletionString,
@@ -262,7 +264,13 @@ async function changeCurrentMenuItem(menuItem){
 		userClickEvents.forEach((userEvent)=>{
 			deleteAccountButton.addEventListener(userEvent,()=>{
 				location.assign(urlFront);
-				fetch(userUrl,{method: "DELETE"});
+				fetch(userUrl,{
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
 			})
 			
 			closeModalButton.addEventListener(userEvent,(event)=>{
@@ -369,6 +377,7 @@ async function handleSaveButton(saveDataButton){
 		options={	method: "PUT",
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
+                                'Authorization': `Bearer ${token}`
 							},
 					body: JSON.stringify({	income: incomeFormValue,
 											balance: balanceFormValue,
@@ -381,6 +390,7 @@ async function handleSaveButton(saveDataButton){
 		options={	method: "PUT",
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
+                                'Authorization': `Bearer ${token}`
 							},
 					body: JSON.stringify({	income: incomeFormValue,
 											invoiceClosingDate: invoiceClosingDateValue
@@ -392,6 +402,7 @@ async function handleSaveButton(saveDataButton){
 		options={	method: "PUT",
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
+                                'Authorization': `Bearer ${token}`
 							},
 					body: JSON.stringify({
 											balance: balanceFormValue,
@@ -404,6 +415,7 @@ async function handleSaveButton(saveDataButton){
 		options={	method: "PUT",
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
+                                'Authorization': `Bearer ${token}`
 							},
 					body: JSON.stringify({
 											invoiceClosingDate: invoiceClosingDateValue
@@ -416,11 +428,11 @@ async function handleSaveButton(saveDataButton){
 	
 	if(options.body){
 		
-		fetch(userUrl,options);
+		await fetch(userUrl, options);
 		updateUserMsg.innerHTML = `Dados salvos com sucesso!`
 		updateUserMsg.setAttribute("class","update_user_msg successful_update");
 		await fetchUser();
-		updateBalanceHeader();
+		await updateBalanceHeader();
 		dataSettingIncomeInput.setAttribute("placeholder",userData.income);
 		dataSettingBalanceInput.setAttribute("placeholder",userData.balance);	
 		saveDataButton.disabled = true;
