@@ -38,7 +38,13 @@ function resetFormValues(){
 
 async function postAndAddLastTransactionToArray(options){
 	await fetch(urlAPI+"transactions",options);
-	const monthTransactionResponse = await fetch(urlMonthInvoice);
+	const monthTransactionResponse = await fetch(urlMonthInvoice,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
 	const monthTransactionJSON = await monthTransactionResponse.json();
 	addTransaction(monthTransactionJSON[monthTransactionJSON.length-1]);
 	setTotal(transactionsArray);
@@ -82,14 +88,16 @@ async function httpPostTransaction(){
                         "Content-Type": "application/json; charset=utf-8",
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify({	name: formValueName,
+                    body: JSON.stringify({
+                        name: formValueName,
                         date: formValueDate,
                         price: formValuePrice,
                         installments: formValueInstallments,
                         category: formValueCategory,
                         type: formValueType,
                         group: formValueGroup,
-                        userId: loggedUserId})
+                        userId: loggedUserId
+                    })
                 });
 				resetFormValues();
 				closeAdditionModal(new Event("click"));
