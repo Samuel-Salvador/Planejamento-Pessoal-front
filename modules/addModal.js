@@ -68,8 +68,8 @@ async function httpPostTransaction(){
 											},
 									body: JSON.stringify({
 															balance: userData.balance-formValuePrice,
-															invoiceClosingDate: userData.invoiceClosingDate,
-									}),
+															invoiceClosingDate: userData.invoiceClosingDate
+									})
 								};
 				await fetch(userUrl,options);
 				await updateBalanceHeader();
@@ -89,7 +89,7 @@ async function httpPostTransaction(){
                         category: formValueCategory,
                         type: formValueType,
                         group: formValueGroup,
-                        userId: loggedUserId}),
+                        userId: loggedUserId})
                 });
 				resetFormValues();
 				closeAdditionModal(new Event("click"));
