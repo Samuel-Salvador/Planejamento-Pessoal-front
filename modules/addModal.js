@@ -75,22 +75,22 @@ async function httpPostTransaction(){
 				await updateBalanceHeader();
 				await changePlaceholdersUserData();
 			}
-			const options= {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json; charset=utf-8",
-                    'Authorization': `Bearer ${token}`
-				},
-				body: JSON.stringify({	name: formValueName,
-									    date: formValueDate,
-									    price: formValuePrice,
-									    installments: formValueInstallments,
-									    category: formValueCategory,
-									    type: formValueType,
-										group: formValueGroup,
-										userId: loggedUserId}),
-				};
-				await postAndAddLastTransactionToArray(options);
+
+            await postAndAddLastTransactionToArray({
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({	name: formValueName,
+                        date: formValueDate,
+                        price: formValuePrice,
+                        installments: formValueInstallments,
+                        category: formValueCategory,
+                        type: formValueType,
+                        group: formValueGroup,
+                        userId: loggedUserId}),
+                });
 				resetFormValues();
 				closeAdditionModal(new Event("click"));
 	}
@@ -129,8 +129,5 @@ export async function initModal() {
 		
 		createOptionSelectionGroup(i,addModalTransactionGroupSelect);
 	}
-	
-	
-	
-			
+
 }
