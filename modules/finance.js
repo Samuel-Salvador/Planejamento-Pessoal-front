@@ -209,7 +209,6 @@ async function addGroupTransactionsToFilter(){
 	for(let i=0;i<userData.transactionGroups.length;i++){
 		
 		createOptionSelectionGroup(i,financeTransactionGroupSelect);
-        financeTransactionGroupSelect.
 	}
 }
 
