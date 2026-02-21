@@ -32,7 +32,9 @@ export const financeTransactionGroupSelect = document.getElementById("transactio
 const containerCreditTotal = document.querySelector(".right_side_panel .container_total .credit_card_total");
 const containerNonCreditTotal = document.querySelector(".right_side_panel .container_total .not_credit_card_total");
 
-financeTransactionGroupSelect.value = "Dia a dia";
+document.addEventListener("DOMContentLoaded", function() {
+    financeTransactionGroupSelect.value = "banana";
+});
 
 export let transactionsArray = [];
 
