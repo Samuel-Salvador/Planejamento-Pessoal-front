@@ -32,6 +32,8 @@ export const financeTransactionGroupSelect = document.getElementById("transactio
 const containerCreditTotal = document.querySelector(".right_side_panel .container_total .credit_card_total");
 const containerNonCreditTotal = document.querySelector(".right_side_panel .container_total .not_credit_card_total");
 
+financeTransactionGroupSelect.value = "Dia a dia";
+
 export let transactionsArray = [];
 
 //sets the correct month and year title if not filtered
