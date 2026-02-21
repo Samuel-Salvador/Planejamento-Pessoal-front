@@ -33,7 +33,7 @@ const containerCreditTotal = document.querySelector(".right_side_panel .containe
 const containerNonCreditTotal = document.querySelector(".right_side_panel .container_total .not_credit_card_total");
 
 document.addEventListener("DOMContentLoaded", function() {
-    financeTransactionGroupSelect.value = "banana";
+    financeTransactionGroupSelect.value = "Dia a dia";
 });
 
 export let transactionsArray = [];
