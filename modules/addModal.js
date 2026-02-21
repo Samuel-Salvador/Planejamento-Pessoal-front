@@ -109,6 +109,9 @@ export function createOptionSelectionGroup(i,element){
 	const selectionGroupNewOption = document.createElement("option");
 	
 	selectionGroupNewOption.innerHTML = userData.transactionGroups[i];
+    if (selectionGroupNewOption.innerHTML === "Dia a dia"){
+        selectionGroupNewOption.setAttribute("selected", true);
+    }
 	element.appendChild(selectionGroupNewOption);
 	
 }

@@ -34,6 +34,7 @@ const containerNonCreditTotal = document.querySelector(".right_side_panel .conta
 
 document.addEventListener("DOMContentLoaded", function() {
     financeTransactionGroupSelect.value = "Dia a dia";
+    financeTransactionGroupSelect.selectedIndex = 0;
     const evento = new Event("change");
     financeTransactionGroupSelect.dispatchEvent(evento);
 });
@@ -208,6 +209,7 @@ async function addGroupTransactionsToFilter(){
 	for(let i=0;i<userData.transactionGroups.length;i++){
 		
 		createOptionSelectionGroup(i,financeTransactionGroupSelect);
+        financeTransactionGroupSelect.
 	}
 }
 
