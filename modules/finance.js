@@ -34,6 +34,8 @@ const containerNonCreditTotal = document.querySelector(".right_side_panel .conta
 
 document.addEventListener("DOMContentLoaded", function() {
     financeTransactionGroupSelect.value = "Dia a dia";
+    const evento = new Event("change");
+    financeTransactionGroupSelect.dispatchEvent(evento);
 });
 
 export let transactionsArray = [];
