@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { Transaction } from '../../types';
 import { formatCurrency } from '../../utils';
 import { PieChart as PieIcon } from 'lucide-react';
@@ -72,21 +72,22 @@ export const CategoryDonutChart: React.FC<CategoryDonutChartProps> = ({ transact
   };
 
   return (
-    <div className="w-full bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4 flex items-center gap-2">
+    <div className="w-full bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 shadow-xl backdrop-blur-sm flex flex-col">
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-2 flex items-center gap-2">
         <PieIcon className="w-4 h-4 text-emerald-400" />
         Gastos por Categoria
       </h3>
 
-      <div className="w-full h-64">
+      {/* Gráfico Donut com altura dedicada */}
+      <div className="w-full h-52 flex-shrink-0">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={chartData}
               cx="50%"
               cy="50%"
-              innerRadius={55}
-              outerRadius={85}
+              innerRadius={50}
+              outerRadius={75}
               paddingAngle={4}
               dataKey="value"
             >
@@ -100,15 +101,27 @@ export const CategoryDonutChart: React.FC<CategoryDonutChartProps> = ({ transact
               ))}
             </Pie>
             <Tooltip content={<CustomTooltip />} />
-            <Legend
-              verticalAlign="bottom"
-              height={36}
-              formatter={(value) => (
-                <span className="text-xs text-slate-300 font-medium">{value}</span>
-              )}
-            />
           </PieChart>
         </ResponsiveContainer>
+      </div>
+
+      {/* Legenda Dinâmica em HTML: cresce naturalmente e expande a altura do Card */}
+      <div className="mt-4 pt-4 border-t border-slate-800/80 flex flex-wrap gap-2 items-center justify-center">
+        {chartData.map((item) => (
+          <div
+            key={item.name}
+            className="flex items-center gap-1.5 bg-slate-950/60 border border-slate-800/70 px-2.5 py-1 rounded-xl text-xs hover:border-slate-700 transition-colors"
+          >
+            <span
+              className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+              style={{ backgroundColor: item.color }}
+            />
+            <span className="text-slate-200 font-medium">{item.name}</span>
+            <span className="text-emerald-400 font-semibold text-[11px] ml-0.5">
+              {formatCurrency(item.value)}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
