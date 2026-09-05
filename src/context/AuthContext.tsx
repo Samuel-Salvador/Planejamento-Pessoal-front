@@ -37,6 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     sessionStorage.removeItem('userId');
     localStorage.removeItem('userName');
     localStorage.removeItem('password');
+    delete api.defaults.headers.common['Authorization'];
     setToken(null);
     setUserId(null);
     setUser(null);
@@ -64,6 +65,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const initAuth = async () => {
       if (token && userId) {
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         await fetchUserProfile(userId);
       }
       setIsLoading(false);
@@ -89,6 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         sessionStorage.setItem('userId', id.toString());
       }
 
+      api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
       setToken(newToken);
       setUserId(id);
 

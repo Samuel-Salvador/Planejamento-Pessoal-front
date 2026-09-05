@@ -40,7 +40,7 @@ export const LoginPage: React.FC = () => {
   const onSubmit = async (data: LoginFormValues) => {
     try {
       const response = await api.post<{ token: string }>('login', {
-        userName: data.userName,
+        userName: data.userName.trim(),
         password: data.password,
       });
 
