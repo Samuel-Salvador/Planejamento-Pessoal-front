@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planejamento Pessoal - Login</title>	
+	<link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="./style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<main class="login_main">
+		<div class="login_title_container">
+			<img class="login_img" src="./img/Logo.png" alt="">
+		    <h1 class="login_title">Planejamento<br><span>Pessoal</span></h1>
+		</div>
+		<form class="container_login" name="login">
+			<h2 class="login_signin_title">Entrar</h2>
+			<input class="login_input" name="user_name" type="text" id="user_name" placeholder="Nome de Usuário">
+			<div class="container_password_login">
+				<input class="login_input login_password" name="password" type="password" id="password" placeholder="Senha">
+				<img class="password_visibility_login visibility_off" src="./img/input_visibility_off.png">
+			</div>
+			<div class="container_checkbox_login">
+				<input class="login_input_checkbox" name="remember" type="checkbox" id="remember">
+				<label class="remember_label" for="remember">Lembre-se de mim</label>			
+			</div>
+			<button class="login_button" type="button">Entrar</button>
+			<a href="./html/register.html" class="login_register_anchor">Cadastre-se</a>
+		</form>
+	</main>
+	
+	<script type="module" src="./modules/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+import React, { useMemo } from 'react';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import { Transaction } from '../../types';
+import { formatCurrency } from '../../utils';
+import { PieChart as PieIcon } from 'lucide-react';
+
+interface CategoryDonutChartProps {
+  transactions: Transaction[];
+}
+
+const COLORS = [
+  '#10b981', // emerald
+  '#3b82f6', // blue
+  '#f59e0b', // amber
+  '#8b5cf6', // purple
+  '#ec4899', // pink
+  '#06b6d4', // cyan
+  '#f97316', // orange
+  '#6366f1', // indigo
+  '#14b8a6', // teal
+  '#e11d48', // rose
+];
+
+export const CategoryDonutChart: React.FC<CategoryDonutChartProps> = ({ transactions }) => {
+  const chartData = useMemo(() => {
+    const categoryMap = new Map<string, number>();
+
+    transactions.forEach((tx) => {
+      const category = tx.category?.trim() || 'Outros';
+      const price = Number(tx.price) || 0;
+      categoryMap.set(category, (categoryMap.get(category) || 0) + price);
+    });
+
+    return Array.from(categoryMap.entries()).map(([name, value], index) => ({
+      name,
+      value,
+      color: COLORS[index % COLORS.length],
+    }));
+  }, [transactions]);
+
+  if (transactions.length === 0) {
+    return (
+      <div className="w-full bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 flex flex-col items-center justify-center min-h-[320px] text-center">
+        <div className="w-12 h-12 rounded-xl bg-slate-800/60 flex items-center justify-center text-slate-500 mb-3">
+          <PieIcon className="w-6 h-6" />
+        </div>
+        <p className="text-sm font-semibold text-slate-300">Sem dados para o gráfico</p>
+        <p className="text-xs text-slate-500 mt-1">Adicione despesas para visualizar os gastos por categoria.</p>
+      </div>
+    );
+  }
+
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0];
+      return (
+        <div className="bg-slate-900 border border-slate-700/80 px-3.5 py-2 rounded-xl shadow-2xl backdrop-blur-md text-xs">
+          <p className="font-semibold text-slate-200 flex items-center gap-1.5">
+            <span
+              className="w-2.5 h-2.5 rounded-full inline-block"
+              style={{ backgroundColor: data.payload.color }}
+            />
+            {data.name}
+          </p>
+          <p className="text-emerald-400 font-bold mt-1 text-sm">
+            {formatCurrency(data.value)}
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <div className="w-full bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4 flex items-center gap-2">
+        <PieIcon className="w-4 h-4 text-emerald-400" />
+        Gastos por Categoria
+      </h3>
+
+      <div className="w-full h-64">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              innerRadius={55}
+              outerRadius={85}
+              paddingAngle={4}
+              dataKey="value"
+            >
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={entry.color}
+                  stroke="#0f172a"
+                  strokeWidth={2}
+                />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+            <Legend
+              verticalAlign="bottom"
+              height={36}
+              formatter={(value) => (
+                <span className="text-xs text-slate-300 font-medium">{value}</span>
+              )}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+};
