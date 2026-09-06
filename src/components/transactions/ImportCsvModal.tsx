@@ -10,13 +10,14 @@ import {
   Check,
   RotateCcw,
   Layers,
+  Info,
 } from 'lucide-react';
 import {
   parseNubankCsv,
   ParsedCsvTransaction,
   IgnoredCsvRow,
 } from '../../utils/csvParser';
-import { formatCurrency, formatDate } from '../../utils';
+import { formatCurrency, formatDate, MONTH_NAMES } from '../../utils';
 import { TransactionType } from '../../types';
 import { CreateTransactionDTO } from '../../hooks/useTransactions';
 import { toast } from 'sonner';
@@ -26,7 +27,15 @@ interface ImportCsvModalProps {
   onClose: () => void;
   groups: string[];
   selectedGroup: string;
-  onImportBatch: (items: CreateTransactionDTO[]) => Promise<any>;
+  month: number;
+  year: number;
+  existingCount: number;
+  onImportBatch: (params: {
+    items: CreateTransactionDTO[];
+    replaceMonth?: boolean;
+    month?: number;
+    year?: number;
+  }) => Promise<any>;
   isImporting: boolean;
 }
 
@@ -35,6 +44,9 @@ export const ImportCsvModal: React.FC<ImportCsvModalProps> = ({
   onClose,
   groups,
   selectedGroup,
+  month,
+  year,
+  existingCount,
   onImportBatch,
   isImporting,
 }) => {
@@ -204,7 +216,12 @@ export const ImportCsvModal: React.FC<ImportCsvModalProps> = ({
     }));
 
     try {
-      await onImportBatch(payload);
+      await onImportBatch({
+        items: payload,
+        replaceMonth: true,
+        month,
+        year,
+      });
       handleClose();
     } catch {
       // toast de erro gerenciado pelo hook
@@ -309,6 +326,21 @@ export const ImportCsvModal: React.FC<ImportCsvModalProps> = ({
                 </button>
               </div>
             </div>
+
+            {/* Aviso de substituição do mês quando já existem transações */}
+            {existingCount > 0 && (
+              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-blue-950/40 border border-blue-800/50 text-xs text-blue-200">
+                <Info className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="font-semibold text-blue-300">
+                    Substituição de Fatura ({MONTH_NAMES[month - 1]} de {year}):
+                  </span>{' '}
+                  <span>
+                    Existem {existingCount} transações cadastradas neste mês. Ao confirmar, as despesas de cartão deste mês serão substituídas pelas do CSV. Parcelas de compras de meses anteriores e transações em Débito/Pix serão preservadas.
+                  </span>
+                </div>
+              </div>
+            )}
 
             {/* Alerta de Itens Ignorados (se houver) */}
             {ignoredItems.length > 0 && (
@@ -560,7 +592,9 @@ export const ImportCsvModal: React.FC<ImportCsvModalProps> = ({
                 disabled={selectedItems.length === 0}
               >
                 <Check className="w-4 h-4 mr-1" />
-                <span>Importar ({selectedItems.length})</span>
+                <span>
+                  {existingCount > 0 ? 'Substituir e Importar' : 'Importar'} ({selectedItems.length})
+                </span>
               </Button>
             )}
           </div>

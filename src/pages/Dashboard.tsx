@@ -184,6 +184,9 @@ export const DashboardPage: React.FC = () => {
         onClose={() => setIsImportModalOpen(false)}
         groups={user?.transactionGroups || []}
         selectedGroup={selectedGroup}
+        month={month}
+        year={year}
+        existingCount={transactions.length}
         onImportBatch={importBatchTransactions}
         isImporting={isImportingBatch}
       />

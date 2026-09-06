@@ -118,8 +118,25 @@ export function useTransactions(month: number, year: number, group: string) {
   });
 
   const importBatchMutation = useMutation({
-    mutationFn: async (items: CreateTransactionDTO[]) => {
+    mutationFn: async ({
+      items,
+      replaceMonth,
+      month: targetMonth,
+      year: targetYear,
+    }: {
+      items: CreateTransactionDTO[];
+      replaceMonth?: boolean;
+      month?: number;
+      year?: number;
+    }) => {
       if (!userId || !user) throw new Error('Usuário não autenticado');
+
+      // Se for para substituir o mês, remove previamente as transações de crédito do mês (preservando parcelas anteriores e débito/pix)
+      if (replaceMonth && targetMonth && targetYear) {
+        await api.delete(
+          `transactions/${userId}/${targetMonth}/${targetYear}/replace?creditOnly=true`
+        );
+      }
 
       // Se houver transações do tipo Débito ou Pix, debitar do saldo do usuário conforme regra de negócio
       const debitSum = items
