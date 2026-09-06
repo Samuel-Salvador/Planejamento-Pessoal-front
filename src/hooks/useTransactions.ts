@@ -96,6 +96,27 @@ export function useTransactions(month: number, year: number, group: string) {
     },
   });
 
+  const updateTransactionMutation = useMutation({
+    mutationFn: async (data: { id: number; name?: string; category?: string }) => {
+      if (!userId || !user) throw new Error('Usuário não autenticado');
+
+      const response = await api.put<Transaction>(`transactions/${data.id}`, {
+        name: data.name?.trim(),
+        category: data.category?.trim() || 'Sem categoria',
+      });
+
+      return response.data;
+    },
+    onSuccess: async () => {
+      toast.success('Transação atualizada com sucesso!');
+      await queryClient.invalidateQueries({ queryKey: ['transactions'] });
+    },
+    onError: (error: any) => {
+      console.error('Erro ao atualizar transação:', error);
+      toast.error('Erro ao atualizar transação. Tente novamente.');
+    },
+  });
+
   // Cálculos dinâmicos
   const transactions = transactionsQuery.data || [];
 
@@ -115,6 +136,8 @@ export function useTransactions(month: number, year: number, group: string) {
     refetch: transactionsQuery.refetch,
     addTransaction: addTransactionMutation.mutateAsync,
     isAdding: addTransactionMutation.isPending,
+    updateTransaction: updateTransactionMutation.mutateAsync,
+    isUpdating: updateTransactionMutation.isPending,
     deleteTransaction: deleteTransactionMutation.mutateAsync,
     isDeleting: deleteTransactionMutation.isPending,
     creditTotal,

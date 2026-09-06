@@ -8,6 +8,7 @@ import { GroupSelector } from '../components/transactions/GroupSelector';
 import { TotalsSummary } from '../components/transactions/TotalsSummary';
 import { TransactionTable } from '../components/transactions/TransactionTable';
 import { AddTransactionModal } from '../components/transactions/AddTransactionModal';
+import { EditTransactionModal } from '../components/transactions/EditTransactionModal';
 import { DeleteTransactionModal } from '../components/transactions/DeleteTransactionModal';
 import { SettingsModal } from '../components/settings/SettingsModal';
 import { CategoryDonutChart } from '../components/charts/CategoryDonutChart';
@@ -44,6 +45,7 @@ export const DashboardPage: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [transactionToDelete, setTransactionToDelete] = useState<Transaction | null>(null);
+  const [transactionToEdit, setTransactionToEdit] = useState<Transaction | null>(null);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
 
   // Hooks de Dados e Ações
@@ -51,6 +53,7 @@ export const DashboardPage: React.FC = () => {
     transactions,
     isLoading,
     addTransaction,
+    updateTransaction,
     deleteTransaction,
     isDeleting,
     creditTotal,
@@ -143,6 +146,7 @@ export const DashboardPage: React.FC = () => {
               transactions={transactions}
               isLoading={isLoading}
               onDeleteClick={handleDeleteClick}
+              onEditClick={(tx) => setTransactionToEdit(tx)}
             />
           </div>
 
@@ -160,6 +164,14 @@ export const DashboardPage: React.FC = () => {
         groups={user?.transactionGroups || []}
         selectedGroup={selectedGroup}
         onAddTransaction={addTransaction}
+      />
+
+      {/* Modal Editar Transação */}
+      <EditTransactionModal
+        isOpen={!!transactionToEdit}
+        onClose={() => setTransactionToEdit(null)}
+        transaction={transactionToEdit}
+        onUpdateTransaction={updateTransaction}
       />
 
       {/* Modal Confirmar Exclusão */}

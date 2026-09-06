@@ -11,7 +11,7 @@ import { CreateTransactionDTO } from '../../hooks/useTransactions';
 
 const transactionSchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
-  category: z.string().min(1, 'Categoria é obrigatória'),
+  category: z.string().optional(),
   date: z.string().min(1, 'Data é obrigatória'),
   price: z.coerce.number().positive('Preço deve ser maior que zero'),
   installments: z.coerce.number().int().min(1, 'Mínimo de 1 parcela'),
@@ -62,7 +62,11 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
 
   const onSubmit = async (data: TransactionFormValues) => {
     try {
-      await onAddTransaction(data);
+      const formattedCategory = data.category?.trim() ? data.category.trim() : 'Sem categoria';
+      await onAddTransaction({
+        ...data,
+        category: formattedCategory,
+      });
       reset();
       onClose();
     } catch (error) {
@@ -88,8 +92,8 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
 
         {/* Categoria */}
         <Input
-          label="Categoria"
-          placeholder="Ex.: Alimentação, Transporte, Lazer"
+          label="Categoria (Opcional)"
+          placeholder="Ex.: Alimentação, Transporte (ou deixe em branco)"
           error={errors.category?.message}
           {...register('category')}
         />

@@ -2,18 +2,20 @@ import React from 'react';
 import { Transaction } from '../../types';
 import { Badge } from '../common/Badge';
 import { formatCurrency, formatDate } from '../../utils';
-import { Trash2, ShoppingBag } from 'lucide-react';
+import { Trash2, ShoppingBag, Pencil } from 'lucide-react';
 
 interface TransactionTableProps {
   transactions: Transaction[];
   isLoading: boolean;
   onDeleteClick: (transaction: Transaction) => void;
+  onEditClick: (transaction: Transaction) => void;
 }
 
 export const TransactionTable: React.FC<TransactionTableProps> = ({
   transactions,
   isLoading,
   onDeleteClick,
+  onEditClick,
 }) => {
   if (isLoading) {
     return (
@@ -69,9 +71,27 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                   <Badge type={tx.type} />
                 </td>
                 <td className="py-3.5 px-4 text-slate-300">
-                  <span className="inline-block bg-slate-800/60 px-2 py-0.5 rounded-lg text-xs text-slate-300">
-                    {tx.category || 'Geral'}
-                  </span>
+                  {(!tx.category || tx.category === 'Sem categoria') ? (
+                    <button
+                      type="button"
+                      onClick={() => onEditClick(tx)}
+                      className="inline-flex items-center gap-1 bg-amber-500/10 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-lg text-xs hover:bg-amber-500/20 hover:border-amber-500/50 transition-colors"
+                      title="Clique para definir uma categoria"
+                    >
+                      <span>Sem categoria</span>
+                      <Pencil className="w-2.5 h-2.5 opacity-70" />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => onEditClick(tx)}
+                      className="inline-flex items-center gap-1 bg-slate-800/60 hover:bg-slate-700/60 text-slate-300 px-2 py-0.5 rounded-lg text-xs transition-colors group/cat"
+                      title="Clique para editar a categoria"
+                    >
+                      <span>{tx.category}</span>
+                      <Pencil className="w-2.5 h-2.5 text-slate-500 opacity-0 group-hover/cat:opacity-100 transition-opacity" />
+                    </button>
+                  )}
                 </td>
                 <td className="py-3.5 px-4 text-slate-300 text-center whitespace-nowrap text-xs">
                   {tx.currentInstallment ? `${tx.currentInstallment}/${tx.installments}` : `${tx.installments || 1}x`}
@@ -80,14 +100,24 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                   {formatCurrency(tx.price)}
                 </td>
                 <td className="py-3.5 px-4 sm:px-6 text-center">
-                  <button
-                    onClick={() => onDeleteClick(tx)}
-                    className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-950/40 rounded-lg transition-colors"
-                    title="Excluir transação"
-                    aria-label={`Excluir transação ${tx.name}`}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                  <div className="flex items-center justify-center gap-1">
+                    <button
+                      onClick={() => onEditClick(tx)}
+                      className="p-1.5 text-slate-500 hover:text-emerald-400 hover:bg-emerald-950/40 rounded-lg transition-colors"
+                      title="Editar transação (nome e categoria)"
+                      aria-label={`Editar transação ${tx.name}`}
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => onDeleteClick(tx)}
+                      className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-950/40 rounded-lg transition-colors"
+                      title="Excluir transação"
+                      aria-label={`Excluir transação ${tx.name}`}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

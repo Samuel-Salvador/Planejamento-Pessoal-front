@@ -26,6 +26,12 @@ export interface Transaction {
   userId: number;
 }
 
+export interface UpdateTransactionDTO {
+  id: number;
+  name?: string;
+  category?: string;
+}
+
 export interface LoginResponse {
   token: string;
 }
