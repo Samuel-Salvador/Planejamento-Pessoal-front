@@ -72,10 +72,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                   <Badge type={tx.type} />
                 </td>
                 <td className="py-3.5 px-4 whitespace-nowrap">
-                  <CategoryBadge
-                    category={tx.category}
-                    onClick={() => onEditClick(tx)}
-                  />
+                  <CategoryBadge category={tx.category} />
                 </td>
                 <td className="py-3.5 px-4 text-slate-300 text-center whitespace-nowrap text-xs">
                   {tx.currentInstallment ? `${tx.currentInstallment}/${tx.installments}` : `${tx.installments || 1}x`}
