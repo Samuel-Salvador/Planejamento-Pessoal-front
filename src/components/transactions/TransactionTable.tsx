@@ -1,6 +1,7 @@
 import React from 'react';
 import { Transaction } from '../../types';
 import { Badge } from '../common/Badge';
+import { CategoryBadge } from '../common/CategoryBadge';
 import { formatCurrency, formatDate } from '../../utils';
 import { Trash2, ShoppingBag, Pencil } from 'lucide-react';
 
@@ -70,28 +71,11 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                 <td className="py-3.5 px-4 whitespace-nowrap">
                   <Badge type={tx.type} />
                 </td>
-                <td className="py-3.5 px-4 text-slate-300">
-                  {(!tx.category || tx.category === 'Sem categoria') ? (
-                    <button
-                      type="button"
-                      onClick={() => onEditClick(tx)}
-                      className="inline-flex items-center gap-1 bg-amber-500/10 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-lg text-xs hover:bg-amber-500/20 hover:border-amber-500/50 transition-colors"
-                      title="Clique para definir uma categoria"
-                    >
-                      <span>Sem categoria</span>
-                      <Pencil className="w-2.5 h-2.5 opacity-70" />
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => onEditClick(tx)}
-                      className="inline-flex items-center gap-1 bg-slate-800/60 hover:bg-slate-700/60 text-slate-300 px-2 py-0.5 rounded-lg text-xs transition-colors group/cat"
-                      title="Clique para editar a categoria"
-                    >
-                      <span>{tx.category}</span>
-                      <Pencil className="w-2.5 h-2.5 text-slate-500 opacity-0 group-hover/cat:opacity-100 transition-opacity" />
-                    </button>
-                  )}
+                <td className="py-3.5 px-4 whitespace-nowrap">
+                  <CategoryBadge
+                    category={tx.category}
+                    onClick={() => onEditClick(tx)}
+                  />
                 </td>
                 <td className="py-3.5 px-4 text-slate-300 text-center whitespace-nowrap text-xs">
                   {tx.currentInstallment ? `${tx.currentInstallment}/${tx.installments}` : `${tx.installments || 1}x`}
