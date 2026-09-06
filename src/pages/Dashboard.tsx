@@ -10,11 +10,12 @@ import { TransactionTable } from '../components/transactions/TransactionTable';
 import { AddTransactionModal } from '../components/transactions/AddTransactionModal';
 import { EditTransactionModal } from '../components/transactions/EditTransactionModal';
 import { DeleteTransactionModal } from '../components/transactions/DeleteTransactionModal';
+import { ImportCsvModal } from '../components/transactions/ImportCsvModal';
 import { SettingsModal } from '../components/settings/SettingsModal';
 import { CategoryDonutChart } from '../components/charts/CategoryDonutChart';
 import { Button } from '../components/common/Button';
 import { Transaction } from '../types';
-import { Plus } from 'lucide-react';
+import { Plus, Upload } from 'lucide-react';
 
 export const DashboardPage: React.FC = () => {
   const { user } = useAuth();
@@ -43,6 +44,7 @@ export const DashboardPage: React.FC = () => {
 
   // Controle de Modais
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [transactionToDelete, setTransactionToDelete] = useState<Transaction | null>(null);
   const [transactionToEdit, setTransactionToEdit] = useState<Transaction | null>(null);
@@ -56,6 +58,8 @@ export const DashboardPage: React.FC = () => {
     updateTransaction,
     deleteTransaction,
     isDeleting,
+    importBatchTransactions,
+    isImportingBatch,
     creditTotal,
     debitTotal,
   } = useTransactions(month, year, selectedGroup);
@@ -124,7 +128,15 @@ export const DashboardPage: React.FC = () => {
             />
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsImportModalOpen(true)}
+              className="w-full sm:w-auto"
+            >
+              <Upload className="w-4 h-4" />
+              <span>Importar CSV</span>
+            </Button>
             <Button
               onClick={() => setIsAddModalOpen(true)}
               className="w-full sm:w-auto"
@@ -164,6 +176,16 @@ export const DashboardPage: React.FC = () => {
         groups={user?.transactionGroups || []}
         selectedGroup={selectedGroup}
         onAddTransaction={addTransaction}
+      />
+
+      {/* Modal Importar CSV */}
+      <ImportCsvModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        groups={user?.transactionGroups || []}
+        selectedGroup={selectedGroup}
+        onImportBatch={importBatchTransactions}
+        isImporting={isImportingBatch}
       />
 
       {/* Modal Editar Transação */}

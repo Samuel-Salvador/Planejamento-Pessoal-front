@@ -117,6 +117,44 @@ export function useTransactions(month: number, year: number, group: string) {
     },
   });
 
+  const importBatchMutation = useMutation({
+    mutationFn: async (items: CreateTransactionDTO[]) => {
+      if (!userId || !user) throw new Error('Usuário não autenticado');
+
+      // Se houver transações do tipo Débito ou Pix, debitar do saldo do usuário conforme regra de negócio
+      const debitSum = items
+        .filter((t) => t.type === 'Débito' || t.type === 'Pix')
+        .reduce((acc, curr) => acc + Number(curr.price), 0);
+
+      if (debitSum > 0) {
+        const newBalance = (user.balance || 0) - debitSum;
+        await api.put(`users/${userId}`, {
+          balance: newBalance,
+          invoiceClosingDate: user.invoiceClosingDate,
+        });
+      }
+
+      const payload = items.map((item) => ({
+        ...item,
+        price: Number(item.price),
+        installments: Number(item.installments),
+        userId,
+      }));
+
+      const response = await api.post<Transaction[]>('transactions/batch', payload);
+      return response.data;
+    },
+    onSuccess: async (data) => {
+      toast.success(`${data.length} transações importadas com sucesso!`);
+      await queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      await refetchUser();
+    },
+    onError: (error: any) => {
+      console.error('Erro ao importar transações em lote:', error);
+      toast.error('Erro ao importar transações. Verifique os dados e tente novamente.');
+    },
+  });
+
   // Cálculos dinâmicos
   const transactions = transactionsQuery.data || [];
 
@@ -140,6 +178,8 @@ export function useTransactions(month: number, year: number, group: string) {
     isUpdating: updateTransactionMutation.isPending,
     deleteTransaction: deleteTransactionMutation.mutateAsync,
     isDeleting: deleteTransactionMutation.isPending,
+    importBatchTransactions: importBatchMutation.mutateAsync,
+    isImportingBatch: importBatchMutation.isPending,
     creditTotal,
     debitTotal,
   };
