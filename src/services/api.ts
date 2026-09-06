@@ -14,6 +14,22 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
+  const url = config.url || '';
+  const isAuthEndpoint = url.includes('login') || (url.includes('users') && config.method?.toLowerCase() === 'post');
+
+  // Não envia cabeçalho de autorização para rotas públicas (login e cadastro)
+  if (isAuthEndpoint) {
+    if (config.headers) {
+      if (typeof config.headers.delete === 'function') {
+        config.headers.delete('Authorization');
+      } else {
+        delete config.headers['Authorization'];
+      }
+    }
+    delete api.defaults.headers.common['Authorization'];
+    return config;
+  }
+
   const token = localStorage.getItem('token') || sessionStorage.getItem('token');
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -26,12 +42,16 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
       const requestUrl = error.config?.url || '';
-      // Se for uma requisição de login falha, NÃO redireciona para que a tela possa exibir o toast de credenciais inválidas
+
+      // Limpa dados de sessão residuais em caso de falha de autenticação
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      sessionStorage.removeItem('userId');
+      delete api.defaults.headers.common['Authorization'];
+
+      // Se não for rota de login, redireciona para tela de login
       if (!requestUrl.includes('login')) {
-        localStorage.removeItem('token');
-        sessionStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        sessionStorage.removeItem('userId');
         window.location.href = '/login';
       }
     }
